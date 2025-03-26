@@ -1,0 +1,22 @@
+<configuration>
+  <timestamp key="myTimestamp" datePattern="yyyy-MM-dd'_'HH-mm-ss"/>
+  <property name="LOG_DIR" value="log"/>
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>${LOG_DIR}/${myTimestamp}.log</file>
+    <encoder>
+      <pattern>%date{STRICT} | %-5level | %thread  | %logger | %msg%n%exception</pattern>
+    </encoder>
+  </appender>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%date{STRICT} | %highlight(%-5level) | %msg%n%exception</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+  </appender>
+  <root level="DEBUG">
+    <appender-ref ref="FILE"/>
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>

@@ -1,0 +1,39 @@
+plugins {
+  id 'java'
+}
+
+group = 'dev.jh'
+version = '1.0.0'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation(
+    'org.slf4j:slf4j-api:2.0.17',
+    'ch.qos.logback:logback-classic:1.5.17',
+    'com.fasterxml.jackson.core:jackson-databind:2.18.3',
+    'com.ezylang:EvalEx:3.4.0',
+  )
+  testImplementation(
+    platform("org.junit:junit-bom:5.10.0"),
+    'org.junit.jupiter:junit-jupiter'
+  )
+}
+
+jar {
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+  manifest {
+    attributes 'Main-Class': 'dev.jh.mathquiz.Main'
+  }
+  from {
+    configurations.runtimeClasspath.collect {
+      it.isDirectory() ? it : zipTree(it)
+    }
+  }
+}
+
+test {
+  useJUnitPlatform()
+}
